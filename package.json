@@ -1,0 +1,16 @@
+{
+  "name": "xpress-edu",
+  "version": "1.0.0",
+  "description": "",
+  "main": "045index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "express",
+    "education"
+  ],
+  "author": "Azrubael",
+  "license": "ISC"
+}
