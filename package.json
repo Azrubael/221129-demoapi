@@ -2,10 +2,11 @@
   "name": "xpress-edu",
   "version": "1.0.0",
   "description": "API for tutorial project with express",
-  "main": "045index.js",
-  "type": "module",
+  "main": "src/063main.js",
+  "type": "commonjs",
   "scripts": {
-    "start": "node 045index.js",
+    "start": "node ./dist/063main.js",
+    "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [
