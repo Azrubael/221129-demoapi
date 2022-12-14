@@ -37,7 +37,7 @@ export class App {
       this.useRoutes()
       this.useExceptionFilters()
       this.server = this.app.listen(this.port)
-      this.logger.log('Сервер запущен по адресу http://localhost:' + this.port)
+      this.logger.log('Сервер запущен по http://localhost:' + this.port)
 
    }
 }

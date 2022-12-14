@@ -5,13 +5,14 @@ import { ExceptionFilter } from "./errors/exection-filter"
 import { LoggerService } from "./logger/logger-service"
 import { ILogger } from './logger/logger-interface'
 import { UserController } from './users/users-controller'
+import { IUserController } from './users/users-interface'
 import { TYPES } from './types'
 import { IExceptionFilter } from './errors/exeption-filter-interface'
 
 export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
    bind<ILogger>(TYPES.ILogger).to(LoggerService)
    bind<IExceptionFilter>(TYPES.ExceptionFilter).to(ExceptionFilter)
-   bind<UserController>(TYPES.UserController).to(UserController)
+   bind<IUserController>(TYPES.UserController).to(UserController)
    bind<App>(TYPES.Application).to(App)
 })
 
