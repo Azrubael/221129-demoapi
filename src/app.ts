@@ -16,7 +16,7 @@ export class App {
    constructor(
       @inject(TYPES.ILogger) private logger: ILogger,
       @inject(TYPES.UserController) private userController: UserController,
-      @inject(TYPES.Exceptionfilter) private exceptionFilter: ExceptionFilter
+      @inject(TYPES.ExceptionFilter) private exceptionFilter: ExceptionFilter
    ) {
       this.app = express()
       this.port = 9001
@@ -37,7 +37,7 @@ export class App {
       this.useRoutes()
       this.useExceptionFilters()
       this.server = this.app.listen(this.port)
-      this.logger.log('Сервер запущен на http://localhost:' + this.port)
+      this.logger.log('Сервер запущен по адресу http://localhost:' + this.port)
 
    }
 }

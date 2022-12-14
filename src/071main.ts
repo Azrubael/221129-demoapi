@@ -1,5 +1,5 @@
 // это будет основная точка входа для запуска приложения
-import { Container } from 'inversify'
+import { Container, ContainerModule, interfaces } from 'inversify'
 import { App } from "./app"
 import { ExceptionFilter } from "./errors/exection-filter"
 import { LoggerService } from "./logger/logger-service"
@@ -8,14 +8,19 @@ import { UserController } from './users/users-controller'
 import { TYPES } from './types'
 import { IExceptionFilter } from './errors/exeption-filter-interface'
 
-const appContainer = new Container()
-appContainer.bind<ILogger>(TYPES.ILogger).to(LoggerService)
-appContainer.bind<IExceptionFilter>(TYPES.Exceptionfilter).to(ExceptionFilter)
-appContainer.bind<UserController>(TYPES.UserController).to(UserController)
-appContainer.bind<App>(TYPES.Application).to(App)
+export const appBindings = new ContainerModule((bind: interfaces.Bind) => {
+   bind<ILogger>(TYPES.ILogger).to(LoggerService)
+   bind<IExceptionFilter>(TYPES.ExceptionFilter).to(ExceptionFilter)
+   bind<UserController>(TYPES.UserController).to(UserController)
+   bind<App>(TYPES.Application).to(App)
+})
 
-const app = appContainer.get<App>(TYPES.Application)
+function bootstrap() {
+   const appContainer = new Container()
+   appContainer.load(appBindings)
+   const app = appContainer.get<App>(TYPES.Application)
+   app.init()
+   return { appContainer, app }
+}
 
-app.init()
-
-export { app, appContainer }
+export const { app, appContainer } = bootstrap()
