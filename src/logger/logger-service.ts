@@ -1,8 +1,10 @@
 import { Logger } from "tslog"
+import { ILogger } from "./logger-interface"
 
 // Абстракция над логгером, которая нужна чтобы скрыть настройки конфигурации
 // а также для обработки side-effects
-export class LoggerService {
+// конкретное применение интерфейса ILogger
+export class LoggerService implements ILogger {
    public logger: Logger
 
    constructor() {

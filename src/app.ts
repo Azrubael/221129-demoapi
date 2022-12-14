@@ -1,7 +1,7 @@
 import express, { Express } from 'express'
-// import { userRouter } from './users/users'
 import { UserController } from './users/users-controller'
 import { Server } from 'http'
+import { ILogger } from './logger/logger-interface'
 import { LoggerService } from './logger/logger-service'
 import { ExceptionFilter } from './errors/exection-filter'
 
@@ -9,12 +9,12 @@ export class App {
    app: Express
    server: Server
    port: number
-   logger: LoggerService
+   logger: ILogger
    userController: UserController
    exceptionFilter: ExceptionFilter
 
    constructor(
-      logger: LoggerService,
+      logger: ILogger,          // DI интерфейса ILogger
       userController: UserController,
       exceptionFilter: ExceptionFilter) {
       this.app = express()
