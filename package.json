@@ -2,10 +2,10 @@
   "name": "xpress-edu",
   "version": "1.0.0",
   "description": "API for tutorial project with express",
-  "main": "src/063main.js",
+  "main": "src/071main.js",
   "type": "commonjs",
   "scripts": {
-    "start": "node ./dist/063main.js",
+    "start": "node ./dist/071main.js",
     "build": "tsc",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -17,6 +17,8 @@
   "license": "ISC",
   "dependencies": {
     "express": "^4.18.2",
+    "inversify": "^6.0.1",
+    "reflect-metadata": "^0.1.13",
     "tslog": "^3.2.2"
   },
   "devDependencies": {

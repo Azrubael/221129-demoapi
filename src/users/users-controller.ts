@@ -1,13 +1,17 @@
 // здесь роутинг, связанный исключительнос пользователями
-
+import 'reflect-metadata' 
 import { Request, Response, NextFunction} from 'express'
+import { inject, injectable } from 'inversify'
 import { BaseController } from '../common/base-controller'
-import { LoggerService } from '../logger/logger-service'
 import { HTTPError } from '../errors/http-error-class'
+import { ILogger } from '../logger/logger-interface'
+import { LoggerService } from '../logger/logger-service'
+import { TYPES } from '../types'
 
+@injectable()
 export class UserController extends BaseController {
-     constructor(logger: LoggerService) {
-      super(logger)
+   constructor(@inject(TYPES.ILogger) private loggerService: ILogger) {
+      super(loggerService)
       this.bindRoutes([
          { path: '/login', method: 'post', func: this.login },
          { path: '/register', method: 'post', func: this.register }

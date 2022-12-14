@@ -1,27 +1,25 @@
 import express, { Express } from 'express'
-import { UserController } from './users/users-controller'
 import { Server } from 'http'
-import { ILogger } from './logger/logger-interface'
-import { LoggerService } from './logger/logger-service'
+import { inject, injectable } from 'inversify'
 import { ExceptionFilter } from './errors/exection-filter'
+import { ILogger } from './logger/logger-interface'
+import { TYPES } from './types'
+import { UserController } from './users/users-controller'
+import 'reflect-metadata' 
 
+@injectable()
 export class App {
    app: Express
    server: Server
    port: number
-   logger: ILogger
-   userController: UserController
-   exceptionFilter: ExceptionFilter
 
    constructor(
-      logger: ILogger,          // DI интерфейса ILogger
-      userController: UserController,
-      exceptionFilter: ExceptionFilter) {
+      @inject(TYPES.ILogger) private logger: ILogger,
+      @inject(TYPES.UserController) private userController: UserController,
+      @inject(TYPES.Exceptionfilter) private exceptionFilter: ExceptionFilter
+   ) {
       this.app = express()
       this.port = 9001
-      this.logger = logger
-      this.userController = userController
-      this.exceptionFilter = exceptionFilter
    }
 
    // метод, дополняющий наше приложение маршрутом
