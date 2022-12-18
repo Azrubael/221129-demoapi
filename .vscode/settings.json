@@ -6,5 +6,5 @@
 		"source.fixAll.eslint": true
 	},
 	"eslint.run": "onSave",
-	"eslintOptions.configFile": "/e/IT/[JS]-code/221129-demo/068-072/.eslintrc.json"
+	"eslint.workingDirectories": ["e:/IT/[JS]-code/221129-demo/068-072/"]
 }

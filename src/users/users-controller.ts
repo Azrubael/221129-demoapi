@@ -1,4 +1,3 @@
-// здесь роутинг, связанный исключительнос пользователями
 import 'reflect-metadata'
 import { Request, Response, NextFunction } from 'express'
 import { inject, injectable } from 'inversify'
@@ -20,7 +19,7 @@ export class UserController extends BaseController implements IUserController {
 
 	login(req: Request, res: Response, next: NextFunction): void {
 		// имитация ошибки
-		next(new HTTPError(401, 'Ошибка авторизации', 'Контектный метод: login'))
+		next(new HTTPError(401, 'Ошибка авторизации', 'Контекcтный метод: login'))
 	}
 
 	register(req: Request, res: Response, next: NextFunction): void {

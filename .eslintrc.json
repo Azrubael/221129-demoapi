@@ -3,8 +3,8 @@
 	"ignorePatterns": ["./dist/**", "./node_modules/**"],
 	"parser": "@typescript-eslint/parser",
 	"parserOptions": {
-	"tsconfigRootDir": "e:/IT/[JS]-code/221129-demo/068-072/",
-	"project": ["./tsconfig.json", "./package.json"]
+		"tsconfigRootDir": "e:/IT/[JS]-code/221129-demo/068-072/",
+		"project": ["./tsconfig.json", "./package.json"]
 	},
 	"plugins": [
 		"@typescript-eslint"
