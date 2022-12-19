@@ -6,6 +6,8 @@ import { HTTPError } from '../errors/http-error-class'
 import { ILogger } from '../logger/logger-interface'
 import { TYPES } from '../types'
 import { IUserController } from './users-interface'
+import { UserLoginDto } from './dto/user-login.dto'
+import { UserRegisterDto } from './dto/user-register.dto'
 
 // Lesson #076
 class Usr {}
@@ -21,14 +23,22 @@ export class UserController extends BaseController implements IUserController {
 		])
 	}
 
-	login(req: Request, res: Response, next: NextFunction): void {
-		usrs.push(new Usr())
-		console.log('Вывод из метода "login". Здесь брейкпойнт...')
+	login(
+		req: Request<{}, {}, UserLoginDto>,
+		res: Response,
+		next: NextFunction
+	): void {
+		console.log('Login request body:', req.body)
 		// имитация ошибки
-		next(new HTTPError(401, 'Ошибка авторизации', 'Контекcтный метод: login'))
+		// next(new HTTPError(401, 'Ошибка авторизации', 'Контекcтный метод: login'))
 	}
 
-	register(req: Request, res: Response, next: NextFunction): void {
+	register(
+		req: Request<{}, {}, UserRegisterDto>,
+		res: Response,
+		next: NextFunction
+	): void {
+		console.log('Register request body:', req.body)
 		this.ok(res, 'register')
 	}
 }
