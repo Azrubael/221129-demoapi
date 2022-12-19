@@ -1,13 +1,13 @@
 // это будет основная точка входа для запуска приложения
 import { Container, ContainerModule, interfaces } from 'inversify'
 import { App } from './app'
-import { ExceptionFilter } from './errors/exection-filter'
+import { ExceptionFilter } from './errors/exception-filter'
 import { LoggerService } from './logger/logger-service'
 import { ILogger } from './logger/logger-interface'
 import { UserController } from './users/users-controller'
 import { IUserController } from './users/users-interface'
 import { TYPES } from './types'
-import { IExceptionFilter } from './errors/exeption-filter-interface'
+import { IExceptionFilter } from './errors/exception-filter-interface'
 
 export interface IBootstrapReturn {
 	appContainer: Container
@@ -26,7 +26,7 @@ function bootstrap(): IBootstrapReturn {
 	appContainer.load(appBindings)
 	const app = appContainer.get<App>(TYPES.Application)
 	app.init()
-	return { appContainer, app }
+	return { app, appContainer }
 }
 
 export const { app, appContainer } = bootstrap()

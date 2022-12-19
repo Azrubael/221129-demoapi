@@ -8,10 +8,7 @@ import { TYPES } from '../types'
 import { IUserController } from './users-interface'
 import { UserLoginDto } from './dto/user-login.dto'
 import { UserRegisterDto } from './dto/user-register.dto'
-
-// Lesson #076
-class Usr {}
-const usrs = [new Usr()]
+import { UserEntity } from './user-entity'
 
 @injectable()
 export class UserController extends BaseController implements IUserController {
@@ -30,15 +27,16 @@ export class UserController extends BaseController implements IUserController {
 	): void {
 		console.log('Login request body:', req.body)
 		// имитация ошибки
-		// next(new HTTPError(401, 'Ошибка авторизации', 'Контекcтный метод: login'))
+		next(new HTTPError(401, 'Ошибка авторизации', 'Контекcтный метод: login'))
 	}
 
-	register(
-		req: Request<{}, {}, UserRegisterDto>,
+	async register(
+		{ body }: Request<{}, {}, UserRegisterDto>,
 		res: Response,
 		next: NextFunction
-	): void {
-		console.log('Register request body:', req.body)
-		this.ok(res, 'register')
+	): Promise<void> {
+		const newUser = new UserEntity(body.email, body.name)
+		await newUser.setPassword(body.password, 10)
+		this.ok(res, newUser)
 	}
 }
