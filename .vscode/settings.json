@@ -6,5 +6,9 @@
 		"source.fixAll.eslint": true
 	},
 	"eslint.run": "onSave",
-	"eslint.workingDirectories": ["e:/IT/[JS]-code/221129-demo/068-072/"]
+	"eslint.workingDirectories": [
+		"e:/IT/[JS]-code/221129-demo/068-072/"
+	],
+	"terminal.integrated.cwd": "e:/IT/[JS]-code/221129-demo/068-072/",
+	"terminal.integrated.tabs.defaultColor": "terminal.ansiBlue"
 }

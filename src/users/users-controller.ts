@@ -7,6 +7,10 @@ import { ILogger } from '../logger/logger-interface'
 import { TYPES } from '../types'
 import { IUserController } from './users-interface'
 
+// Lesson #076
+class Usr {}
+const usrs = [new Usr()]
+
 @injectable()
 export class UserController extends BaseController implements IUserController {
 	constructor(@inject(TYPES.ILogger) private loggerService: ILogger) {
@@ -18,6 +22,8 @@ export class UserController extends BaseController implements IUserController {
 	}
 
 	login(req: Request, res: Response, next: NextFunction): void {
+		usrs.push(new Usr())
+		console.log('Вывод из метода "login". Здесь брейкпойнт...')
 		// имитация ошибки
 		next(new HTTPError(401, 'Ошибка авторизации', 'Контекcтный метод: login'))
 	}

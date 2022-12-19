@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": "e:/IT/[JS]-code/221129-demo/068-072/",
+			"cwd": "e:/IT/[JS]-code/221129-demo/068-072/"
+		}
+	],
+	"settings": {
+		"terminal.integrated.tabs.title": "${workspaceFolder}"
+	}
+}
