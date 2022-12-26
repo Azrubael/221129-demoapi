@@ -1,9 +1,11 @@
+import { UserModel } from '@prisma/client'
 import { inject, injectable } from 'inversify'
 import { IConfigService } from '../config/config-service-interface'
 import { TYPES } from '../types'
 import { UserLoginDto } from './dto/user-login.dto'
 import { UserRegisterDto } from './dto/user-register.dto'
 import { UserEntity } from './user-entity'
+import { IUsersRepository } from './users-repository-interface'
 import { IUserService } from './users-service-interface'
 
 // здесь собственно и должна находиться бизнес-логика:
@@ -12,19 +14,24 @@ import { IUserService } from './users-service-interface'
 @injectable()
 export class UserService implements IUserService {
 	constructor(
-		@inject(TYPES.ConfigService) private configService: IConfigService
+		@inject(TYPES.ConfigService) private configService: IConfigService,
+		@inject(TYPES.UsersRepository) private usersRepository: IUsersRepository
 	) {}
 	async createUser({
 		email,
 		name,
 		password,
-	}: UserRegisterDto): Promise<UserEntity | null> {
+	}: UserRegisterDto): Promise<UserModel | null> {
 		const newUser = new UserEntity(email, name)
 		const salt = this.configService.get('SALT')
 		console.log(`SALT = ${salt}`)
 		await newUser.setPassword(password, Number(salt))
 		// пользователь есть? есть - возвращаем null, иначе создаем пользователя
-		return null
+		const existedUser = await this.usersRepository.find(email)
+		if (existedUser) {
+			return null
+		}
+		return this.usersRepository.create(newUser)
 	}
 
 	async validateUser(dto: UserLoginDto): Promise<boolean> {

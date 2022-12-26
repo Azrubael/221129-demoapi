@@ -9,6 +9,7 @@ import 'reflect-metadata'
 import { IExceptionFilter } from './errors/exception-filter-interface'
 import { IConfigService } from './config/config-service-interface'
 import { PrismaService } from './database/prisma-service'
+import { IUsersRepository } from './users/users-repository-interface'
 
 @injectable()
 export class App {
@@ -21,6 +22,7 @@ export class App {
 		@inject(TYPES.UserController) private userController: UserController,
 		@inject(TYPES.ExceptionFilter) private exceptionFilter: IExceptionFilter,
 		@inject(TYPES.ConfigService) private configService: IConfigService,
+		@inject(TYPES.UsersRepository) private usersRepository: IUsersRepository,
 		@inject(TYPES.PrismaService) private prismaService: PrismaService
 	) {
 		this.app = express()
