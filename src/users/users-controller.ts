@@ -10,6 +10,7 @@ import { UserLoginDto } from './dto/user-login.dto'
 import { UserRegisterDto } from './dto/user-register.dto'
 import { ValidateMiddleware } from '../common/validate-middleware'
 import { IUserService } from './users-service-interface'
+import bodyParser from 'body-parser'
 
 @injectable()
 export class UserController extends BaseController implements IUserController {
@@ -26,6 +27,7 @@ export class UserController extends BaseController implements IUserController {
 				func: this.register,
 				middlewares: [new ValidateMiddleware(UserRegisterDto)],
 			},
+			{ path: '/loginew', method: 'post', func: this.logiNew },
 		])
 	}
 
@@ -37,6 +39,21 @@ export class UserController extends BaseController implements IUserController {
 		console.log('Login request body:', req.body)
 		// имитация ошибки
 		next(new HTTPError(401, 'Ошибка авторизации', 'Контекcтный метод: login'))
+	}
+
+	// функция logiNew создана в качестве упражнения
+	async logiNew(
+		{ body }: Request<{}, {}, UserLoginDto>,
+		res: Response,
+		next: NextFunction
+	): Promise<void> {
+		const result = await this.userService.validateUser(body)
+		if (!result) {
+			return next(
+				new HTTPError(222, 'Такой пользователь не зарегистрирован!')
+			)
+		}
+		this.ok(res, { email: body.email })
 	}
 
 	// это собственно работа контроллера

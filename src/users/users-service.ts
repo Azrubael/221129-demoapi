@@ -1,5 +1,6 @@
 import { UserModel } from '@prisma/client'
 import { inject, injectable } from 'inversify'
+import { ValidateMiddleware } from '../common/validate-middleware'
 import { IConfigService } from '../config/config-service-interface'
 import { TYPES } from '../types'
 import { UserLoginDto } from './dto/user-login.dto'
@@ -34,7 +35,16 @@ export class UserService implements IUserService {
 		return this.usersRepository.create(newUser)
 	}
 
-	async validateUser(dto: UserLoginDto): Promise<boolean> {
+	async validateUser(body: UserLoginDto): Promise<boolean> {
+		const existedUser = await this.usersRepository.find(body.email)
+		if (!existedUser) {
+			return false
+		}
+
+		const valid = UserEntity.validatePassword(body.password)
+		if (!existedPassword) {
+			return false
+		}
 		return true
 	}
 }

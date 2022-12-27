@@ -4,6 +4,7 @@ import { IConfigService } from './config-service-interface'
 import { TYPES } from '../types'
 import { ILogger } from '../logger/logger-interface'
 
+// Загрузка конфигурации БД
 @injectable()
 export class ConfigService implements IConfigService {
 	private config: DotenvParseOutput
