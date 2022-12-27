@@ -10,12 +10,15 @@ import { UserLoginDto } from './dto/user-login.dto'
 import { UserRegisterDto } from './dto/user-register.dto'
 import { ValidateMiddleware } from '../common/validate-middleware'
 import { IUserService } from './users-service-interface'
+import { sign } from 'jsonwebtoken' // синхронная, используем callback, обернутый Promise
+import { IConfigService } from '../config/config-service-interface'
 
 @injectable()
 export class UserController extends BaseController implements IUserController {
 	constructor(
 		@inject(TYPES.ILogger) private loggerService: ILogger,
-		@inject(TYPES.UserService) private userService: IUserService
+		@inject(TYPES.UserService) private userService: IUserService,
+		@inject(TYPES.ConfigService) private configService: IConfigService
 	) {
 		super(loggerService)
 		this.bindRoutes([
@@ -46,8 +49,11 @@ export class UserController extends BaseController implements IUserController {
 				new HTTPError(401, 'Ошибка авторизации', 'Контекcтный метод: login')
 			)
 		}
-		// в реальном проекте должен возвращаться JWT-token вместо email
-		this.ok(res, { email: req.body.email })
+		const jwt = await this.signJWT(
+			req.body.email,
+			this.configService.get('SECRET')
+		)
+		this.ok(res, { jwt })
 	}
 
 	// это собственно работа контроллера
@@ -61,5 +67,26 @@ export class UserController extends BaseController implements IUserController {
 			return next(new HTTPError(422, 'Такой пользователь уже существует!'))
 		}
 		this.ok(res, { email: result.email, id: result.id })
+	}
+
+	private signJWT(email: string, secret: string): Promise<string> {
+		return new Promise<string>((resolve, reject) => {
+			sign(
+				{
+					email,
+					iat: Math.floor(Date.now() / 999), //  <<<=== issue at
+				},
+				secret,
+				{
+					algorithm: 'HS256',
+				},
+				(err, token) => {
+					if (err) {
+						reject(err)
+					}
+					resolve(token as string)
+				}
+			)
+		})
 	}
 }
