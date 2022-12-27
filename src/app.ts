@@ -22,7 +22,7 @@ export class App {
 		@inject(TYPES.UserController) private userController: UserController,
 		@inject(TYPES.ExceptionFilter) private exceptionFilter: IExceptionFilter,
 		@inject(TYPES.ConfigService) private configService: IConfigService,
-		@inject(TYPES.UsersRepository) private usersRepository: IUsersRepository,
+		// @inject(TYPES.UsersRepository) private usersRepository: IUsersRepository,
 		@inject(TYPES.PrismaService) private prismaService: PrismaService
 	) {
 		this.app = express()
