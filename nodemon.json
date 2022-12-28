@@ -1,11 +1,11 @@
 {
-   "verbose": true,
+   "verbose": false,
    "watch": [ "src/**" ],
    "ext": "js ts json",
    "execMap": {
         "ts": "ts-node"
     },
    "ignore": [ "*.spec.ts", "*.test.ts" ],
-   "exec": "ts-node ./src/071main.ts",
-   "delay": 1500
+   "exec": "ts-node --files ./src/071main.ts",
+   "delay": 500
 }
