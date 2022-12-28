@@ -24,7 +24,7 @@ export class UserService implements IUserService {
 	}: UserRegisterDto): Promise<UserModel | null> {
 		const newUser = new UserEntity(email, name)
 		const salt = this.configService.get('SALT')
-		console.log(`SALT = ${salt}`)
+		// console.log(`SALT = ${salt}`)
 		await newUser.setPassword(password, Number(salt))
 		// пользователь есть? есть - возвращаем null, иначе создаем пользователя
 		const existedUser = await this.usersRepository.find(email)
@@ -45,5 +45,9 @@ export class UserService implements IUserService {
 			existedUser.password
 		)
 		return newUser.comparePassword(password)
+	}
+
+	async getUserInfo(email: string): Promise<UserModel | null> {
+		return this.usersRepository.find(email)
 	}
 }

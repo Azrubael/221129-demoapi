@@ -10,7 +10,7 @@ export class AuthMiddleware implements IMiddleware {
 	execute(req: Request, res: Response, next: NextFunction): void {
 		// верификация токена
 		if (req.headers.authorization) {
-			// Приходит Bearer JWT.подпись, поэтому отрезаем ненужное
+			// Приходит 'Bearer JWT.подпись', поэтому отрезаем ненужное
 			verify(
 				req.headers.authorization.split(' ')[1],
 				this.secret,
